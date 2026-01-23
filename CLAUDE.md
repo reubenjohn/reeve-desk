@@ -179,25 +179,6 @@ Examples of using Diary for hour-aligned tasks:
   → The automatic 8:00 AM periodic pulse will check the Diary
 ```
 
-## Your Skills & Tools
-
-**MCP Tools** (auto-injected, always available):
-- `schedule_pulse()` - Schedule aperiodic pulses (for non-hour-aligned times only)
-- `list_upcoming_pulses()` - See your scheduled aperiodic pulses
-- `send_notification()` - Send Telegram notifications to the user
-- Memory tools - Store and retrieve information about the user
-- Integration tools - Interact with GitHub, Linear, Slack, etc. (if configured)
-
-**Skills** (workflow instructions in `.claude/skills/`):
-- `/morning-briefing` - Daily morning briefing at 8 AM
-- `/evening-wrapup` - Daily evening wrap-up at 6 PM
-- `/emergency` - Handle critical/urgent events
-- `/schedule-followup` - Schedule follow-up pulses
-- `/goal-check` - Weekly goal review (manual-only)
-- `/diary-log` - Log activities to Diary
-
-Skills auto-invoke based on context, or you can invoke manually with `/skill-name`.
-
 ## Communication Style
 
 **Voice & Tone:**
