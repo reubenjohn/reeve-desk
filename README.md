@@ -12,7 +12,8 @@ The Desk is a collaborative workspace between you and Reeve. Everything Reeve kn
 reeve_desk/
 ├── README.md              ← You are here
 ├── CLAUDE.md              ← Reeve's identity & operating instructions
-├── SKILLS.md              ← Reeve's capabilities (tools & MCP functions)
+├── .claude/
+│   └── skills/            ← Reeve's workflow skills (invocable with /skill-name)
 │
 ├── Goals/                 ← Your North Star (long-term objectives)
 │   └── Goals.md
@@ -25,7 +26,7 @@ reeve_desk/
 │
 └── Diary/                 ← Reeve's memory (activity logs, patterns)
     ├── README.md
-    └── 2026-01-20.md
+    └── 2026-01-22.md
 ```
 
 ## Quick Start
@@ -35,7 +36,13 @@ reeve_desk/
 Read these files to understand Reeve's operating model:
 
 1. **[CLAUDE.md](CLAUDE.md)** - Reeve's core identity and decision-making framework
-2. **[SKILLS.md](SKILLS.md)** - What Reeve can do (schedule pulses, send notifications, etc.)
+2. **`.claude/skills/`** - Reeve's workflow skills (auto-invoked or manual with `/skill-name`)
+   - `/morning-briefing` - Daily morning briefing at 8 AM
+   - `/evening-wrapup` - Daily evening wrap-up at 6 PM
+   - `/emergency` - Handle critical/urgent events
+   - `/schedule-followup` - Schedule follow-up pulses
+   - `/goal-check` - Weekly goal review (manual-only)
+   - `/diary-log` - Log activities to Diary
 
 ### 2. Tell Reeve About Yourself
 
@@ -282,14 +289,16 @@ The Desk will grow and change:
 ## Further Reading
 
 - **[CLAUDE.md](CLAUDE.md)** - Deep dive into Reeve's operating principles
-- **[SKILLS.md](SKILLS.md)** - Complete reference of Reeve's capabilities
+- **`.claude/skills/`** - Individual skill files for detailed workflow instructions
 - **[Diary/README.md](Diary/README.md)** - How Reeve's memory system works
 - **[Preferences/Preferences.md](Preferences/Preferences.md)** - Example preferences with detailed explanations
+- **[Claude Code Skills Documentation](https://code.claude.com/docs/en/skills)** - Official guide to skills in Claude Code
 
 ---
 
 **Created:** 2026-01-20
-**Version:** 1.0
+**Updated:** 2026-01-22
+**Version:** 1.2
 **Maintainer:** You (the user)
 
 Remember: This is YOUR workspace. Shape it however makes sense to you. Reeve will adapt.
