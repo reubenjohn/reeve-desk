@@ -168,43 +168,9 @@ This gives Reeve enough context to be useful.
 
 ## File Editing Tips
 
-### Markdown Basics
+All Desk files use standard Markdown formatting. For syntax reference, see the [Markdown Guide](https://www.markdownguide.org/basic-syntax/).
 
-All files use Markdown formatting:
-
-```markdown
-# Heading 1
-## Heading 2
-### Heading 3
-
-**Bold text**
-*Italic text*
-
-- Bullet point
-- Another bullet
-  - Nested bullet
-
-1. Numbered list
-2. Second item
-
-[Link text](https://url.com)
-
-`code or commands`
-```
-
-### Editing Files
-
-**On Linux/Mac:**
-```bash
-cd ~/reeve_desk
-nano Goals/Goals.md          # Simple editor
-vim Goals/Goals.md           # Advanced editor
-code Goals/Goals.md          # VS Code
-```
-
-**On any platform:**
-- Any text editor (Notepad++, Sublime Text, VS Code, etc.)
-- Just edit and save - Reeve reads files directly
+Edit files with any text editor - Reeve reads them directly from the filesystem. No special tools required.
 
 ### Version Control (Optional)
 
