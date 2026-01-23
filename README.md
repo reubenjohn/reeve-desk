@@ -79,7 +79,10 @@ Why did Reeve decline that 8 AM meeting?
 - Sees a snowstorm coming to your favorite ski resort and proposes a trip
 
 **How it works:**
-- Reeve schedules "pulses" (wake-ups) for itself using `schedule_pulse()`
+- Reeve wakes up on three types of pulses:
+  - **Periodic pulses** (automatic, every hour on the hour)
+  - **Aperiodic pulses** (Reeve schedules these for non-hour times using `schedule_pulse()`)
+  - **Event-triggered pulses** (external events like Telegram messages)
 - When a pulse fires, Reeve wakes up, reads the Desk, and takes action
 - You're only interrupted when something truly requires your attention
 
@@ -129,20 +132,21 @@ This gives Reeve enough context to be useful.
 
 3. **Takes action:**
    - Send a notification (if the user needs to know)
-   - Schedule future pulses (for follow-ups)
+   - Schedule future aperiodic pulses (for non-hour times) or add instructions to Diary/ (for hour-aligned times)
    - Update Diary/ (log what I did)
 
 ### Example Flow: Morning Briefing
 
 ```
-1. Pulse fires at 8:00 AM with prompt: "Daily morning briefing"
+1. Periodic pulse fires automatically at 8:00 AM
+2. Reeve checks Diary/2026-01-20.md and sees: "Morning briefing"
 
-2. Reeve reads:
+3. Reeve reads:
    - Goals/Goals.md → User's top priority is "Complete Reeve MVP"
    - Responsibilities/Responsibilities.md → Checking calendar is part of morning routine
    - Preferences/Preferences.md → User wants concise briefings
 
-3. Reeve composes notification:
+4. Reeve composes notification:
    "Good morning! 3 meetings today:
    - 10 AM: Team standup
    - 2 PM: 1:1 with Sarah (re: Q1 budget)
@@ -151,15 +155,15 @@ This gives Reeve enough context to be useful.
    Top priority: Finish Phase 5 (Daemon) for Reeve MVP.
    Deep work block protected: 9 AM - 12 PM."
 
-4. Reeve sends notification via Telegram
+5. Reeve sends notification via Telegram
 
-5. Reeve logs to Diary/2026-01-20.md:
+6. Reeve logs to Diary/2026-01-20.md:
    "Morning briefing delivered at 8:00 AM.
    User has moderate meeting load (3 meetings).
    Deep work block successfully protected."
 
-6. Reeve schedules next pulse:
-   schedule_pulse(scheduled_at="6:00 PM", prompt="Evening wrap-up")
+7. Reeve adds to Diary/2026-01-20.md for later:
+   "Evening wrap-up" (the automatic 6:00 PM periodic pulse will handle it)
 ```
 
 ## File Editing Tips

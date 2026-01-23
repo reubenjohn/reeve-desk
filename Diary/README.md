@@ -4,11 +4,25 @@ This directory contains Reeve's internal monologue, activity logs, and learned p
 
 ## Purpose
 
-The Diary serves three functions:
+The Diary serves four functions:
 
 1. **Continuity** - Maintain context between wake-up cycles (pulses)
-2. **Learning** - Track patterns and behaviors to improve over time
-3. **Transparency** - Provide a human-readable audit trail of Reeve's actions
+2. **Task Scheduling** - Store instructions for hour-aligned periodic pulses
+3. **Learning** - Track patterns and behaviors to improve over time
+4. **Transparency** - Provide a human-readable audit trail of Reeve's actions
+
+## Important: Using Diary for Hour-Aligned Tasks
+
+**Periodic pulses fire automatically every hour** (8:00 AM, 9:00 AM, 10:00 AM, etc.). When a periodic pulse fires, Reeve checks the Diary for that day to see if there are any instructions.
+
+**If you want Reeve to do something at an hour mark, write it in the Diary** - don't schedule an aperiodic pulse, or both will fire at the same time.
+
+**Examples:**
+- "Morning briefing" → Add to today's Diary, the 8:00 AM periodic pulse will handle it
+- "Evening wrap-up" → Add to today's Diary, the 6:00 PM periodic pulse will handle it
+- "Remind user about standup" → Add to tomorrow's Diary for 9:00 AM
+
+**For non-hour times** (like 6:45 AM or 2:30 PM), use `schedule_pulse()` to create an aperiodic pulse instead.
 
 ## Organization
 
@@ -43,15 +57,19 @@ Each day gets a file: `YYYY-MM-DD.md`
 ```markdown
 # 2026-01-20
 
+## Tasks for Today
+
+### Periodic Pulse Tasks (Hour-Aligned)
+- [x] 8:00 AM - Morning briefing - ✅ Completed
+- [ ] 6:00 PM - Evening wrap-up - ⏳ Pending
+
+### Aperiodic Pulse Tasks (Non-Hour Times)
+- [ ] 6:45 AM - Check flight status for UA123 - ⏳ Scheduled
+
 ## Morning Briefing (8:00 AM)
 - User had 3 meetings today
 - Reminded about Q1 report deadline
 - Calendar optimized: blocked 2 hours for deep work
-
-## Scheduled Pulses Today
-- [x] Morning briefing (8:00 AM) - ✅ Completed
-- [ ] Check flight status (4:00 PM) - ⏳ Pending
-- [ ] Evening wrap-up (6:00 PM) - ⏳ Pending
 
 ## User Interactions
 - 10:30 AM: User asked about snowboarding trip planning
@@ -67,8 +85,8 @@ Each day gets a file: `YYYY-MM-DD.md`
 - Completed all high-priority tasks before noon
 
 ## Actions Taken
-- Scheduled follow-up pulse for ski trip (tomorrow 9 AM)
-- Sent notification about meeting prep at 2 PM
+- Added ski trip follow-up to tomorrow's Diary (9:00 AM periodic pulse will handle it)
+- Scheduled aperiodic pulse for meeting prep at 2:30 PM (non-hour time)
 - Logged user preference to Preferences/Travel.md
 
 ## Blockers / Issues
@@ -78,7 +96,10 @@ Each day gets a file: `YYYY-MM-DD.md`
 ## Tomorrow's Context
 - User has dentist appointment at 10 AM (personal calendar)
 - Q1 report deadline is approaching (due Friday)
-- Should follow up on ski trip planning
+
+## Instructions for Tomorrow (for periodic pulses)
+- 9:00 AM - Follow up on ski trip planning
+- 10:00 AM - Remind user about dentist appointment
 ```
 
 ## Weekly Summaries
