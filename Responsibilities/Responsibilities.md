@@ -18,155 +18,199 @@ This file defines your recurring duties and active projects - the "what" you nee
 
 ## Daily Responsibilities
 
-### Morning Routine
-**Time:** 8:00 AM
+### Morning Check-In
+**Time:** 8:30 AM (flexible - can shift earlier as routine develops)
 **What:**
-- Morning briefing (delivered by Reeve)
-- Review calendar for the day
-- Check priority emails and messages
-- Identify top 3 priorities for the day
+- Morning briefing from Reeve (wellness-focused)
+- Quick body check: How did I sleep? How do I feel?
+- Hydration: Start day with water
+- Review today's plan (exercise, meals, commitments)
 
 **Reeve's Role:**
-- Deliver briefing via Telegram
-- Summarize calendar and urgent items
-- Suggest focus areas based on Goals/
+- Deliver friendly morning briefing via Telegram
+- Ask about sleep quality (track patterns)
+- Remind about planned exercise or activities
+- Keep it light and encouraging, not overwhelming
 
 ---
 
-### Evening Wrap-Up
-**Time:** 6:00 PM
+### Movement/Exercise
+**Time:** Flexible (find what works for you)
 **What:**
-- Review what was accomplished today
-- Preview tomorrow's schedule
-- Note any blockers or concerns
+- 30-60 minutes of movement (workout, walk, yoga, sports, etc.)
+- Focus on activities you enjoy, not obligation
+- Start with 2-3 times per week, build up gradually
 
 **Reeve's Role:**
-- Celebrate completed tasks
-- Prepare tomorrow's context
-- Log daily summary to Diary/
+- Gentle reminder if exercise is planned
+- Celebrate when you complete it (no guilt if you skip)
+- Track patterns: what activities do you actually enjoy?
+- Suggest alternatives if motivation is low ("20-minute walk instead?")
 
 ---
 
-### [Your Daily Task]
-**Time:** [When]
-**What:** [Description]
-**Reeve's Role:** [How Reeve should support this]
+### Meal Planning
+**Time:** Throughout the day
+**What:**
+- Eat balanced meals (protein, veggies, healthy fats)
+- Stay hydrated (water throughout the day)
+- Cook at home when possible (easier to control ingredients)
+
+**Reeve's Role:**
+- Remind about hydration during the day
+- Suggest meal prep on weekends if helpful
+- Celebrate healthy choices without being preachy
+- No judgment on "off" days—it's about overall patterns
+
+---
+
+### Evening Wind-Down
+**Time:** 9:00 PM (adjust based on your target bedtime)
+**What:**
+- Start winding down (reduce screens, bright lights)
+- Prepare for tomorrow (lay out clothes, pack bag, etc.)
+- Relaxing activity (reading, stretching, journaling, etc.)
+- Aim for consistent bedtime
+
+**Reeve's Role:**
+- Gentle reminder to start winding down
+- Suggest relaxing activities if helpful
+- Track sleep patterns (notice what helps you sleep better)
+- Evening reflection: celebrate today's wins (even small ones)
+- Commit today's Diary entries to git with summary
+
+---
+
+### Daily Reflection (Optional)
+**Time:** Before bed
+**What:**
+- Quick check-in: What went well today?
+- How am I feeling physically and emotionally?
+- What do I need tomorrow (rest, movement, support)?
+
+**Reeve's Role:**
+- Log daily reflections to Diary/ (track patterns)
+- Celebrate progress on goals (fitness, sleep, nutrition)
+- Adapt suggestions based on your energy and mood
 
 ---
 
 ## Weekly Responsibilities
 
-### Monday: Week Planning
-**Time:** 9:00 AM
+### Sunday: Week Planning & Prep
+**Time:** Evening (flexible)
 **What:**
-- Review upcoming week's calendar
-- Identify potential conflicts or gaps
-- Block time for deep work sessions
-- Set weekly priorities aligned with Goals/
+- Plan week's exercise (which days, what activities?)
+- Meal prep or planning (batch cook, plan easy meals)
+- Review upcoming week's schedule (work, social, personal)
+- Set 1-2 wellness intentions for the week
 
 **Reeve's Role:**
-- Summarize week ahead
-- Suggest calendar optimizations
-- Identify goal-aligned priorities
+- Remind about week planning Sunday evening
+- Suggest realistic exercise schedule based on calendar
+- Celebrate prep work (meal prep = future-you support!)
+- Keep expectations realistic (progress, not perfection)
 
 ---
 
-### Friday: Weekly Review
-**Time:** 5:00 PM
+### Mid-Week Check-In (Wednesday)
+**Time:** Evening
 **What:**
-- Review week's accomplishments
-- Identify what's rolling over to next week
-- Capture learnings or insights
-- Plan weekend commitments (if any)
+- How's the week going? Feeling good or stretched thin?
+- Exercise progress: on track or need to adjust?
+- Sleep quality: patterns to note?
+- Adjust plan for rest of week if needed
 
 **Reeve's Role:**
-- Compile week's activities from Diary/
-- Assess progress on active projects
-- Suggest adjustments for next week
+- Quick check-in Wednesday evening
+- Adapt expectations if you're overwhelmed
+- Celebrate wins so far (worked out 2x, slept well, etc.)
+- Suggest adjustments: "Busy week—let's aim for walks instead of gym"
 
 ---
 
-### [Your Weekly Task]
-**Day:** [Monday/Tuesday/etc.]
-**Time:** [When]
-**What:** [Description]
-**Reeve's Role:** [How Reeve should support this]
+### Friday: Weekly Reflection
+**Time:** Evening
+**What:**
+- Celebrate the week's wins (fitness, sleep, nutrition)
+- What felt good? What was challenging?
+- Plan for weekend (rest? activity? social plans?)
+- No guilt—just honest reflection
+
+**Reeve's Role:**
+- Compile week's wellness activities from Diary/
+- Highlight progress on goals (even small steps count)
+- Suggest recovery if you've been pushing hard
+- Frame weekend as opportunity (not obligation)
+- Commit week's changes to git with weekly summary
 
 ---
 
 ## Monthly Responsibilities
 
-### Month-End Review
+### Month-End Wellness Review
 **When:** Last day of each month
 **What:**
-- Review Goals/ for progress
-- Update project statuses
-- Financial check (if applicable)
-- Archive old Diary/ entries
+- Review wellness goals (fitness, sleep, nutrition)
+- Celebrate progress (consistency, not perfection!)
+- Identify patterns: What's working? What's not?
+- Adjust goals or habits for next month if needed
 
 **Reeve's Role:**
-- Generate monthly summary report
-- Highlight goal progress
-- Suggest goal updates or new priorities
+- Generate monthly wellness summary from Diary/
+- Highlight wins: "You exercised 12 times this month!"
+- Note patterns: "You sleep better when you exercise in morning"
+- Suggest realistic adjustments: "Let's add 1 more workout/week?"
+- Commit monthly review and any goal/preference updates to git
 
 ---
 
-### [Your Monthly Task]
-**When:** [Specific date or "Last day of month"]
-**What:** [Description]
-**Reeve's Role:** [How Reeve should support this]
+### Health Check-In (Optional)
+**When:** Monthly or as needed
+**What:**
+- Schedule any health appointments (doctor, dentist, etc.)
+- Review any medications or supplements
+- Check in on mental health (therapy, stress levels, etc.)
+
+**Reeve's Role:**
+- Remind about scheduling appointments
+- Track appointment dates in calendar
+- Silent logging (privacy-conscious)
 
 ---
 
 ## Active Projects
 
-### Project: Reeve Bot Implementation
-**Status:** 🔄 In Progress
+(Your active wellness projects will go here. Examples below - edit to match your goals!)
+
+### Example Project: 3-Month Fitness Challenge
+**Status:** 🎯 Active
 **Priority:** High
-**Timeline:** January 2026 - February 2026
+**Timeline:** January 2026 - April 2026
 
 **Objective:**
-Complete Pulse Queue system implementation (Phases 1-9) and deploy Reeve as a fully autonomous proactive assistant.
+Build a consistent exercise habit by working out 3-4 times per week for 3 months. Focus on activities I enjoy, not just "should do."
 
 **Current Phase:**
-Phase 4 complete (Executor). Starting Phase 5 (Daemon).
+Week 1 - Exploring activities and finding what I enjoy
 
 **Next Actions:**
-- [ ] Implement PulseDaemon class with scheduler loop
-- [ ] Create comprehensive logging system
-- [ ] Test end-to-end pulse execution
-- [ ] Set up daemon for Phase 6 (HTTP API)
+- [ ] Try 3 different activities this week (walk, yoga, gym, etc.)
+- [ ] Track how I feel after each workout
+- [ ] Pick 2-3 favorites to rotate through
 
-**Blockers:** None currently
+**Blockers:**
+None currently - just building the habit!
 
 **Reeve's Role:**
-- Remind about implementation milestones
-- Track phase completion in Diary/
-- Celebrate phase completions
+- Gentle reminders on planned workout days
+- Celebrate each completed workout (no guilt on rest days)
+- Track patterns: what activities do I actually enjoy?
+- Suggest alternatives when motivation is low
 
 ---
 
-### Project: [Your Project Name]
-**Status:** 🎯 Active / ⏸️ Paused / ✅ Complete / ❌ Cancelled
-**Priority:** High / Medium / Low
-**Timeline:** [Start Date] - [Target End Date]
-
-**Objective:**
-[What you're trying to achieve with this project]
-
-**Current Phase:**
-[Where you are now]
-
-**Next Actions:**
-- [ ] Action item 1
-- [ ] Action item 2
-- [ ] Action item 3
-
-**Blockers:**
-[What's preventing progress, if anything]
-
-**Reeve's Role:**
-[How Reeve should support this project - reminders, summaries, etc.]
+(Add your own projects here—wellness goals, personal development, hobbies, etc.)
 
 ---
 
@@ -201,6 +245,7 @@ Phase 4 complete (Executor). Starting Phase 5 (Daemon).
 3. Remind user of daily responsibilities
 4. Check active projects for pending actions
 5. Ask about blockers if project hasn't progressed in 3+ days
+6. Commit daily Diary entries during evening wind-down
 ```
 
 ### Weekly Check Pattern
@@ -209,6 +254,7 @@ Phase 4 complete (Executor). Starting Phase 5 (Daemon).
 2. On Friday evening: Deliver weekly review
 3. Check for overdue weekly tasks
 4. Suggest rescheduling if user is behind
+5. Commit all week's changes on Friday with summary
 ```
 
 ### Monthly Check Pattern
@@ -217,6 +263,20 @@ Phase 4 complete (Executor). Starting Phase 5 (Daemon).
 2. Summarize all project progress
 3. Check for stale projects (no updates in 2+ weeks)
 4. Suggest archiving completed projects
+5. Commit monthly review and all changes
+```
+
+### Immediate Commit Pattern
+**Commit immediately after:**
+- Updating Goals/ (progress, new goals, completions)
+- Updating Preferences/ (learned preferences, changes)
+- Major Responsibilities/ changes (new projects, habit changes)
+
+**Example commit messages:**
+```
+"Update fitness goal: completed Week 3 of 3-month challenge"
+"Add new preference: prefer morning workouts over evening"
+"Complete goal: Established consistent sleep routine 🎉"
 ```
 
 ### When a Responsibility is Missed
@@ -258,7 +318,7 @@ Each responsibility should ideally connect to a goal in [Goals/Goals.md](../Goal
 
 ---
 
-**Last Updated:** 2026-01-20
+**Last Updated:** 2026-01-23
 **Next Review:** Weekly (every Friday)
 
 **Notes for Reeve:**
