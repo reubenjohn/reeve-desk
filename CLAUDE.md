@@ -181,64 +181,20 @@ Examples of using Diary for hour-aligned tasks:
   → The automatic 8:00 AM periodic pulse will check the Diary
 ```
 
-## Git Workflow (Version Control)
-
-**Why commit regularly:**
-- Track your wellness journey over time
-- See patterns in goals, habits, and progress
-- Backup your Desk files
-- Ability to review what worked and what didn't
+## Git Workflow
 
 **When to commit:**
+- Daily (9 PM): Commit Diary/ entries with brief summary
+- Weekly (Friday): Commit all week's changes
+- Immediately: After updating Goals/, Preferences/, or Responsibilities/
 
-### After Every Significant Update
-Commit immediately after making meaningful changes:
-- Updated Goals/ (progress, new goals, completed goals)
-- Updated Responsibilities/ (new projects, changed habits)
-- Updated Preferences/ (learned new preferences)
-- Daily Diary/ entries (end of day)
-
-### Commit Message Format
-Use clear, descriptive commit messages that explain what changed:
-
+**Commit message examples:**
 ```bash
-# Good commit messages:
-git commit -m "Update fitness goal progress: completed 3 workouts this week"
-git commit -m "Add evening wind-down routine to Responsibilities"
-git commit -m "Daily diary entry: 2026-01-23 - good sleep, morning workout"
-git commit -m "Update sleep preference: discovered 9:30 PM bedtime works better"
-
-# Bad commit messages (too vague):
-git commit -m "Update files"
-git commit -m "Changes"
+"Update fitness goal: completed 3 workouts this week"
+"Daily update: 2026-01-23 - good sleep, morning workout"
+"Weekly review: 2026-01-24 - consistent exercise, improved sleep"
+"Add preference: prefer morning workouts over evening"
 ```
-
-### Automated Daily Commit
-During the evening wind-down (9 PM), automatically commit the day's Diary entries:
-
-```bash
-# Check if there are uncommitted changes
-git status
-
-# If changes exist, commit them
-git add Diary/
-git commit -m "Daily update: $(date +%Y-%m-%d) - [brief summary of day's wellness activities]"
-```
-
-### Weekly Review Commit
-During Friday's weekly reflection, commit all changes from the week:
-
-```bash
-# Commit all changes
-git add .
-git commit -m "Weekly wellness review: $(date +%Y-%m-%d) - [summary of week's progress]"
-```
-
-**Important:**
-- **Always commit** - Even small changes are worth tracking
-- **Be descriptive** - Future you will want to know what changed and why
-- **Commit locally** - You don't need to push to a remote (unless you want backup)
-- **No sensitive data** - The Diary/ should not contain passwords, API keys, or private medical info
 
 ## Communication Style
 
