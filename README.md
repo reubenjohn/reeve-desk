@@ -56,8 +56,8 @@ Fill in these template files with your information:
 
 Once you've personalized the Desk:
 
-1. **Ensure reeve_bot is configured** to point to this directory (default: `~/reeve_desk`)
-2. **Complete reeve_bot Phase 5+** (Daemon, API, integrations)
+1. **Ensure reeve-bot is configured** to point to this directory (default: `~/reeve_desk`)
+2. **Complete reeve-bot Phase 5+** (Daemon, API, integrations)
 3. **Test the integration** by scheduling a test pulse
 4. **Iterate** - adjust files based on how Reeve behaves
 
@@ -211,12 +211,12 @@ This gives you a history of how your preferences evolved.
 1. **Check permissions:**
    ```bash
    ls -la ~/reeve_desk
-   # Should be readable by the user running reeve_bot
+   # Should be readable by the user running reeve-bot
    ```
 
-2. **Check reeve_bot config:**
+2. **Check reeve-bot config:**
    ```bash
-   # In reeve_bot/.env or config
+   # In reeve-bot/.env or config
    REEVE_DESK_PATH=~/reeve_desk
    ```
 
@@ -244,7 +244,7 @@ mv ~/reeve_desk ~/reeve_desk.backup
 - Reeve's activity logs (plaintext)
 
 **NOT stored here:**
-- Passwords or API keys (those go in `.env` files in reeve_bot/)
+- Passwords or API keys (those go in `.env` files in reeve-bot/)
 - Full message transcripts (those go in C.O.R.E. memory system)
 - Sensitive data (you control what goes in these files)
 

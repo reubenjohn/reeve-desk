@@ -184,6 +184,7 @@ Examples of using Diary for hour-aligned tasks:
 ## Git Workflow
 
 **When to commit:**
+- Regularly: After any significant edits
 - Daily (9 PM): Commit Diary/ entries with brief summary
 - Weekly (Friday): Commit all week's changes
 - Immediately: After updating Goals/, Preferences/, or Responsibilities/
