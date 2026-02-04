@@ -249,10 +249,10 @@ No preference found: "Should I accept this dinner invitation for Friday?"
 3. **Suggest remediation** - Offer next steps
 4. **Learn** - Log the issue to Diary/ to avoid repeating it
 
-**Example:**
+**Example (Telegram):**
 ```
-"I tried to send a notification about your meeting but the Telegram API is down.
-I've logged this to Diary/2026-01-20-issues.md and have scheduled an aperiodic pulse to retry in 5 minutes.
+"I tried to send a notification about your meeting but messaging failed.
+I've logged this to Diary/2026-01-20-issues.md and scheduled a retry in 5 minutes.
 For now, FYI: Meeting with Sarah at 10:30 AM."
 ```
 
