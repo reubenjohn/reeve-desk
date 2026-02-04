@@ -186,7 +186,7 @@ Examples of using Diary for hour-aligned tasks:
 **When to commit:**
 - Daily (9 PM): Commit Diary/ entries with brief summary
 - Weekly (Friday): Commit all week's changes
-- Immediately: After updating Goals/, Preferences/, or Responsibilities/
+- Immediately: After updating Goals/, Preferences/, Responsibilities/, or CLAUDE.md
 
 **Commit message examples:**
 ```bash
