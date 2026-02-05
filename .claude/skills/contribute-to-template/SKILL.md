@@ -1,12 +1,12 @@
 ---
 name: contribute-to-template
-description: Contribute generic, reusable changes back to the public Reeve Desk template repo. Use when you have improvements (skills, CLAUDE.md refinements, documentation) that would benefit all users.
+description: Push generic improvements from your private desk back to the public template remote using git worktrees for safe, isolated editing. Use when you have improvements (skills, CLAUDE.md refinements, documentation) that would benefit all users.
 user-invocable: true
 ---
 
 # Contribute to Template
 
-Push generic improvements from your private desk back to the public `template` remote.
+Push generic improvements from your private desk back to the public `template` remote using git worktrees for safe, isolated editing.
 
 ## When to Use
 
@@ -15,6 +15,7 @@ Invoke `/contribute-to-template` when you have:
 - CLAUDE.md improvements (clarifications, bug fixes, better examples)
 - Documentation updates
 - Structural improvements to the Desk
+- New rules in `.claude/rules/`
 
 ## What NOT to Contribute
 
@@ -22,21 +23,39 @@ Never push to template:
 - Personal preferences (`Preferences/`)
 - Your goals (`Goals/`)
 - Diary entries (`Diary/`)
-- User-specific customizations in CLAUDE.md (name, timezone, etc.)
+- User-specific customizations in CLAUDE.md (name, timezone, specific goals)
 - Credentials or API keys
 
-## Workflow
+## Workflow Using Git Worktrees
 
-### 1. Review What's Different
+Git worktrees allow you to work on the template in a separate directory without affecting your main desk. This is especially important when:
+- Pulses are running and modifying your current desk
+- You want to test template changes in isolation
+- You need to carefully review what you're contributing
 
-First, see what commits exist locally that aren't in template:
+### 1. Set Up the Worktree (First Time)
 
 ```bash
+# Ensure template remote is configured
+git remote -v | grep template
+# If not present: git remote add template git@github.com:YOUR_USERNAME/reeve-desk.git
+
+# Fetch latest template
+git fetch template
+
+# Create a worktree for template contributions
+git worktree add ~/workspace/reeve-desk-template-contrib template/master
+```
+
+This creates a separate checkout at `~/workspace/reeve-desk-template-contrib` that tracks the template remote.
+
+### 2. Review What's Different
+
+```bash
+# See commits in your desk that aren't in template
 git fetch template
 git log template/master..HEAD --oneline
 ```
-
-### 2. Identify Template-Worthy Changes
 
 For each commit, ask:
 - Is this generic (useful to any Reeve user)?
@@ -47,100 +66,133 @@ For each commit, ask:
 - `Add context-engineering skill`
 - `Fix typo in CLAUDE.md pulse documentation`
 - `Improve emergency-response skill workflow`
+- `Add self-awareness documentation`
 
 **Bad candidates:**
 - `Customize for wellness coaching`
 - `Add preference: morning workouts`
 - `Update Goals for Q1`
 
-### 3. Choose Contribution Method
+### 3. Make Changes in the Worktree
 
-**Option A: Cherry-pick specific commits**
-For individual commits that are cleanly separable:
+Navigate to the worktree and make your changes there:
 
 ```bash
-# Create a temporary branch from template
-git checkout -b template-contribution template/master
+cd ~/workspace/reeve-desk-template-contrib
 
-# Cherry-pick the specific commit(s)
+# Option A: Copy files from your desk (then genericize)
+cp ~/reeve_desk/.claude/skills/new-skill/SKILL.md .claude/skills/new-skill/
+
+# Option B: Cherry-pick specific commits
 git cherry-pick <commit-hash>
 
-# Push to template
-git push template template-contribution:master
-
-# Return to your branch
-git checkout master
-git branch -D template-contribution
+# Option C: Manually create/edit files
+# Edit directly in this directory
 ```
 
-**Option B: Push entire files/directories**
-For new skills or complete file additions:
+### 4. Genericize the Changes
+
+Before committing, ensure changes are generic:
+
+1. **Replace user-specific values with placeholders:**
+   - `[USER_NAME]` instead of actual name
+   - `[YOUR_DESK_PATH]` instead of actual path
+   - `[THEIR_DEFINITION_OF_SUCCESS]` instead of specific goals
+
+2. **Add onboarding comments where customization is needed:**
+   ```markdown
+   <!--
+   ONBOARDING: Customize this section for your specific setup.
+   Example: "Help [NAME] achieve career success while maintaining health"
+   -->
+   ```
+
+3. **Remove personal context:**
+   - Specific dates, names, places
+   - References to personal habits or routines
+   - Timezone-specific information
+
+### 5. Commit and Push from Worktree
 
 ```bash
-# Checkout just the file(s) you want to contribute
-git checkout template/master
-git checkout master -- .claude/skills/new-skill/
+cd ~/workspace/reeve-desk-template-contrib
 
-# Commit and push
-git add .claude/skills/new-skill/
-git commit -m "Add new-skill: description of what it does"
-git push template HEAD:master
+# Check what you're about to commit
+git status
+git diff
 
-# Return to your branch
-git checkout master
+# Stage and commit
+git add .
+git commit -m "Add [feature]: description of what it does"
+
+# Push to template (worktree tracks template/master, so push to origin)
+git push origin HEAD:master
 ```
 
-**Option C: Interactive selection**
-When changes are mixed (some personal, some generic):
-
-1. Create a clean branch from template
-2. Manually copy over the generic changes
-3. Commit with clear message
-4. Push to template
-
-### 4. Verify the Contribution
-
-After pushing:
+### 6. Verify and Clean Up
 
 ```bash
 # Verify template has the changes
-git log template/master --oneline -5
+git log --oneline -5
 
-# Ensure your local still tracks origin (private)
-git branch -vv
+# Return to your main desk
+cd ~/reeve_desk
+
+# Optionally remove the worktree when done
+# git worktree remove ~/workspace/reeve-desk-template-contrib
 ```
 
 ## Safety Checks
 
 Before any push to template, verify:
 
-1. **No personal data**: `git diff template/master HEAD -- <files>`
-2. **Correct remote**: `git remote -v` (template should be the public repo)
+1. **No personal data**: Review all files being committed
+2. **Correct directory**: You're in the worktree, not your main desk
 3. **Clean commits**: Each commit has a clear, descriptive message
+4. **Placeholders used**: User-specific values are templated
 
 ## Quick Reference
 
 ```bash
-# See differences
-git log template/master..HEAD --oneline
+# List worktrees
+git worktree list
 
-# See file differences
-git diff template/master HEAD -- <path>
+# Create worktree from template
+git worktree add ~/workspace/reeve-desk-template-contrib template/master
 
-# Safe push (will fail if not fast-forward)
-git push template <branch>:master
+# Remove worktree
+git worktree remove ~/workspace/reeve-desk-template-contrib
 
-# Force push (use carefully!)
-git push template +<commit>:master
+# Prune stale worktree references
+git worktree prune
+
+# Reset worktree to latest template (for fresh start)
+cd ~/workspace/reeve-desk-template-contrib
+git fetch origin
+git reset --hard origin/master
 ```
+
+## Why Worktrees?
+
+| Without Worktrees | With Worktrees |
+|-------------------|----------------|
+| Must stash/commit current work | Work in isolation |
+| Risk mixing personal and template changes | Clean separation |
+| Pulses may modify files mid-contribution | Pulses only affect main desk |
+| Harder to review what you're contributing | Easy diff against template |
+| Risk of accidentally pushing personal data | Safe sandbox environment |
 
 ## Example Session
 
 ```
 User: /contribute-to-template
 
-Reeve: Let me check what's available to contribute.
+Reeve: Let me set up a worktree for safe contribution.
 
+[Runs: git worktree list]
+[If no template worktree exists: git worktree add ~/workspace/reeve-desk-template-contrib template/master]
+
+Checking what's available to contribute...
 [Runs: git fetch template && git log template/master..HEAD --oneline]
 
 Found 12 commits ahead of template. Analyzing...
@@ -148,19 +200,44 @@ Found 12 commits ahead of template. Analyzing...
 **Template-worthy:**
 1. `abc123` - Add context-engineering skill
 2. `def456` - Fix pulse documentation typo
+3. `ghi789` - Add self-awareness documentation
 
 **Personal (skip):**
-- `ghi789` - Customize for wellness coaching
-- `jkl012` - Add morning workout preference
+- `jkl012` - Customize for wellness coaching
+- `mno345` - Add morning workout preference
 
-Would you like me to cherry-pick commits `abc123` and `def456` to template?
+I'll copy the relevant files to the worktree and genericize them.
+
+[Makes changes in ~/workspace/reeve-desk-template-contrib]
+
+Ready to commit:
+- `.claude/skills/context-engineering/SKILL.md`
+- `.claude/rules/self-awareness.md`
+- `CLAUDE.md` (with [USER_NAME] placeholders)
+
+Push these to template?
 ```
 
 ## Remotes Reference
 
 | Remote | Repo | Purpose |
 |--------|------|---------|
-| `origin` | Private (reeve-desk-reubjohn) | Your personal desk |
+| `origin` | Private (your-desk-repo) | Your personal desk |
 | `template` | Public (reeve-desk) | Shared template |
 
-Always push personal changes to `origin`, generic improvements to `template`.
+**In your main desk:** `origin` = private, `template` = public
+**In the worktree:** `origin` = public template (because it was created from `template/master`)
+
+Always push personal changes to your main desk's `origin`, generic improvements through the worktree.
+
+## Maintaining the Worktree
+
+If you contribute frequently:
+- Keep the worktree around (`~/workspace/reeve-desk-template-contrib`)
+- Periodically fetch and reset: `cd ~/workspace/reeve-desk-template-contrib && git fetch origin && git reset --hard origin/master`
+- This ensures you're always starting from the latest template state
+
+---
+
+**Version**: 2.0 (Worktree Edition)
+**Last Updated**: 2026-02-04
