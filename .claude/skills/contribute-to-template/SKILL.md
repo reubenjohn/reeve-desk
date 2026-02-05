@@ -8,6 +8,23 @@ user-invocable: true
 
 Push generic improvements from your private desk back to the public `template` remote using git worktrees for safe, isolated editing.
 
+---
+
+## **CRITICAL SECURITY WARNING**
+
+The template is a **PUBLIC REPOSITORY**. Pushing private data is a **serious security and privacy breach**.
+
+**BEFORE EVERY PUSH, VERIFY:**
+1. **No personal names** - Replace your name with `[USER_NAME]`
+2. **No file paths** - Replace `/home/yourname/` with `[YOUR_PATH]`
+3. **No credentials** - API keys, tokens, passwords
+4. **No personal data** - Goals, preferences, diary entries, schedules
+5. **No contact info** - Phone numbers, emails, addresses
+
+**If in doubt, DON'T PUSH. Ask the user first.**
+
+---
+
 ## When to Use
 
 Invoke `/contribute-to-template` when you have:
@@ -17,14 +34,22 @@ Invoke `/contribute-to-template` when you have:
 - Structural improvements to the Desk
 - New rules in `.claude/rules/`
 
-## What NOT to Contribute
+## What NEVER to Contribute
 
-Never push to template:
-- Personal preferences (`Preferences/`)
-- Your goals (`Goals/`)
-- Diary entries (`Diary/`)
-- User-specific customizations in CLAUDE.md (name, timezone, specific goals)
-- Credentials or API keys
+**These directories are ALWAYS private - NEVER push them:**
+- `Preferences/` - Personal preferences, communication style
+- `Goals/` - Personal goals and aspirations
+- `Diary/` - Logs, notes, personal history
+- `Responsibilities/` - Personal tasks and projects
+
+**These patterns are ALWAYS private - search and replace before pushing:**
+- User's real name → `[USER_NAME]`
+- Specific paths → `[YOUR_DESK_PATH]`, `[REEVE_BOT_PATH]`
+- Dates referencing personal events
+- Any API keys, tokens, or credentials
+- Phone numbers, email addresses, physical addresses
+- Names of friends, family, colleagues
+- Specific companies, projects, or employers
 
 ## Workflow Using Git Worktrees
 
@@ -142,14 +167,38 @@ cd ~/reeve_desk
 # git worktree remove ~/workspace/reeve-desk-template-contrib
 ```
 
-## Safety Checks
+## Safety Checks (MANDATORY BEFORE EVERY PUSH)
 
-Before any push to template, verify:
+**Run this verification before pushing to template:**
 
-1. **No personal data**: Review all files being committed
-2. **Correct directory**: You're in the worktree, not your main desk
-3. **Clean commits**: Each commit has a clear, descriptive message
-4. **Placeholders used**: User-specific values are templated
+```bash
+cd ~/workspace/reeve-desk-template-contrib
+
+# 1. Check for personal names (replace YOUR_NAME with actual name)
+grep -ri "YOUR_NAME" . --include="*.md" | grep -v ".git"
+
+# 2. Check for personal paths
+grep -ri "/home/" . --include="*.md" | grep -v ".git" | grep -v "\[YOUR"
+
+# 3. Check for potential API keys/secrets
+grep -riE "(api_key|token|password|secret)" . --include="*.md" | grep -v ".git"
+
+# 4. Review all staged changes line by line
+git diff --staged
+
+# 5. Verify no private directories are included
+git status | grep -E "(Preferences|Goals|Diary|Responsibilities)/"
+```
+
+**If ANY of these commands return results, STOP and fix before pushing.**
+
+**Checklist:**
+- [ ] No personal names (replaced with `[USER_NAME]`)
+- [ ] No personal paths (replaced with `[YOUR_DESK_PATH]`)
+- [ ] No API keys, tokens, or credentials
+- [ ] No Diary/, Goals/, Preferences/, Responsibilities/ files
+- [ ] All changes reviewed with `git diff --staged`
+- [ ] Commit message doesn't contain personal info
 
 ## Quick Reference
 
