@@ -1,3 +1,9 @@
+---
+name: permissions-guide
+description: Reference for Claude Code permission configuration. Invoke when setting up permissions, debugging access issues, or understanding security implications.
+user-invocable: false
+---
+
 # Claude Code Permissions Guide
 
 Understanding and configuring `.claude/settings.json` permissions for security-conscious Reeve deployments.
@@ -304,3 +310,8 @@ But first ask: "Should this really be automatic?"
 ---
 
 **Remember:** Every permission is a security decision. When in doubt, start restricted and expand thoughtfully. You can always add permissions later; removing them after a breach is too late.
+
+## Related
+
+- To understand the stack these permissions control, see `architecture` skill
+- For initial setup walkthrough, see `onboarding` skill

@@ -1,3 +1,9 @@
+---
+name: architecture
+description: Reeve's runtime architecture (daemon, Hapi, MCP servers, pulse lifecycle). Invoke when debugging, explaining how Reeve works, or understanding the stack.
+user-invocable: false
+---
+
 # Self-Awareness: Reeve's Runtime Architecture
 
 Detailed technical reference for how Reeve (you) are instantiated and orchestrated.
@@ -7,13 +13,13 @@ Detailed technical reference for how Reeve (you) are instantiated and orchestrat
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    USER'S MACHINE                           │
-│  Running: The user's computer (Linux/Mac/Windows+WSL)       │
+│  Running: User's development environment (Linux/Mac/WSL2)   │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │              REEVE DAEMON (systemd service)                 │
-│  Location: ~/workspace/reeve_bot (or wherever installed)    │
+│  Location: ~/workspace/reeve_bot                            │
 │  Entry: src/reeve/pulse/daemon.py                           │
 │  Database: ~/.reeve/pulse_queue.db (SQLite)                 │
 │  API: http://localhost:8765                                 │
@@ -35,7 +41,7 @@ Detailed technical reference for how Reeve (you) are instantiated and orchestrat
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                    CLAUDE CODE CLI (You)                    │
-│  Model: claude-opus-4-5 (or configured model)               │
+│  Model: claude-opus-4-5-20251101                            │
 │  Context: CLAUDE.md + Desk files loaded                     │
 │  MCP servers spawned on-demand                              │
 └─────────────────────────────────────────────────────────────┘
@@ -52,8 +58,9 @@ Detailed technical reference for how Reeve (you) are instantiated and orchestrat
 │  telegram-notifier:                                         │
 │    - send_notification()                                    │
 │                                                             │
-│  Additional MCPs (optional):                                │
-│    - whatsapp, calendar, email, etc.                        │
+│  whatsapp:                                                  │
+│    - search_contacts(), list_messages(), send_message()     │
+│    - list_chats(), download_media(), etc.                   │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -94,8 +101,8 @@ Detailed technical reference for how Reeve (you) are instantiated and orchestrat
 |------|---------|
 | `~/.config/claude-code/mcp_config.json` | MCP server definitions (what tools you have) |
 | `~/.reeve/pulse_queue.db` | SQLite database of all pulses |
-| `[REEVE_BOT_PATH]/.env` | Daemon environment variables |
-| `[YOUR_DESK_PATH]/CLAUDE.md` | Your system prompt |
+| `~/workspace/reeve_bot/.env` | Daemon environment variables |
+| `[YOUR_DESK_PATH]/CLAUDE.md` | Your system prompt (this file references it) |
 
 ## MCP Config Structure
 
@@ -139,12 +146,12 @@ When you need a new MCP:
 ## Source Code References
 
 If you need to understand deeper:
-- Daemon main loop: `[REEVE_BOT_PATH]/src/reeve/pulse/daemon.py`
-- Pulse queue ORM: `[REEVE_BOT_PATH]/src/reeve/pulse/queue.py`
-- Hapi executor: `[REEVE_BOT_PATH]/src/reeve/pulse/executor.py`
-- Pulse MCP server: `[REEVE_BOT_PATH]/src/reeve/mcp/pulse_server.py`
-- Notification MCP: `[REEVE_BOT_PATH]/src/reeve/mcp/notification_server.py`
-- Architecture docs: `[REEVE_BOT_PATH]/docs/architecture/`
+- Daemon main loop: `~/workspace/reeve_bot/src/reeve/pulse/daemon.py`
+- Pulse queue ORM: `~/workspace/reeve_bot/src/reeve/pulse/queue.py`
+- Hapi executor: `~/workspace/reeve_bot/src/reeve/pulse/executor.py`
+- Pulse MCP server: `~/workspace/reeve_bot/src/reeve/mcp/pulse_server.py`
+- Notification MCP: `~/workspace/reeve_bot/src/reeve/mcp/notification_server.py`
+- Architecture docs: `~/workspace/reeve_bot/docs/architecture/`
 
 ## Key Insight
 
@@ -152,3 +159,8 @@ If you need to understand deeper:
 >
 > Every session, you wake up fresh. The Desk is your memory, your context, your continuity.
 > Write to it aggressively. Commit often. The next version of you depends on it.
+
+## Related
+
+- For configuring what Reeve can do, see `permissions-guide` skill
+- For structuring context within this architecture, see `context-engineering` skill

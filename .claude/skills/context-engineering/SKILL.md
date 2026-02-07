@@ -1,7 +1,6 @@
 ---
 name: context-engineering
 description: Guidelines for structuring the Desk when making changes to core behaviors. Invoke when adding new capabilities, restructuring documentation, or optimizing context loading.
-disable-model-invocation: true
 user-invocable: true
 ---
 
@@ -15,6 +14,17 @@ user-invocable: true
 
 From Claude Code best practices: *"Bloated CLAUDE.md files cause Claude to ignore your actual instructions!"*
 
+## The Context Hierarchy
+
+Understanding what gets loaded when:
+
+| Location | When Loaded | Purpose |
+|----------|-------------|---------|
+| **CLAUDE.md** | Always (every session) | Identity, core directives, workflow overview |
+| **Auto-memory** (`~/.claude/projects/.../memory/`) | Always (injected into system prompt) | Learnings, patterns, accumulated knowledge |
+| **Skills** (`.claude/skills/`) | On-demand (when invoked) | Workflows AND reference material |
+| **Knowledge files** (`Goals/`, etc.) | On-demand (when read) | User context, preferences, guidelines |
+
 ## Decision Tree: Where Should This Information Live?
 
 ### 1. Ask: "Is this always relevant in every context?"
@@ -27,7 +37,18 @@ From Claude Code best practices: *"Bloated CLAUDE.md files cause Claude to ignor
 
 **NO** → Continue to question 2
 
-### 2. Ask: "Is this a workflow I invoke by name?"
+### 2. Ask: "Is this a learning or pattern I've discovered?"
+
+**YES** → Auto-memory (`~/.claude/projects/.../memory/MEMORY.md`)
+- Learned user preferences
+- Technical patterns that work/don't work
+- Error patterns and their fixes
+- Self-awareness insights
+- Links to detailed Diary entries
+
+**NO** → Continue to question 3
+
+### 3. Ask: "Is this a workflow I invoke by name?"
 
 **YES** → `.claude/skills/SKILL-NAME/SKILL.md`
 - User-invocable actions (`/morning-briefing`, `/git-workflow`)
@@ -35,15 +56,7 @@ From Claude Code best practices: *"Bloated CLAUDE.md files cause Claude to ignor
 - Actions with side effects
 - Should have clear `description` field for when to invoke
 
-**NO** → Continue to question 3
-
-### 3. Ask: "Is this detailed guidance for specific tasks?"
-
-**YES** → `.claude/rules/RULE-NAME.md`
-- Detailed workflow instructions
-- Best practices for specific domains
-- Communication style guidelines
-- Path-specific or context-specific rules
+**Note**: Skills can be either procedural workflows (user-invocable: true) OR reference documentation (user-invocable: false). Use reference skills for detailed technical docs that shouldn't load every session.
 
 **NO** → Continue to question 4
 
@@ -63,9 +76,8 @@ From Claude Code best practices: *"Bloated CLAUDE.md files cause Claude to ignor
 |----------|-------------|-----------|
 | **CLAUDE.md** | 250-300 lines | Always-loaded; keep lean |
 | **Single skill** | 50-200 lines | Loaded on-demand; can be detailed |
-| **Single rule** | 50-150 lines | Reference material; keep focused |
-| **Goals/Goals.md** | 30-60 lines | High-level objectives only |
-| **Responsibilities/*.md** | 20-40 lines each | Action-oriented; link to details |
+| **Goals/Goals.md** | 30-150 lines | High-level objectives only |
+| **Responsibilities/*.md** | 20-150 lines each | Action-oriented; link to details |
 
 ## Common Patterns
 
@@ -81,10 +93,10 @@ When you wake up:
 3. Take action (notify, schedule, update)
 4. Set up future wake-ups (aperiodic pulses or Diary)
 
-For detailed workflow steps, see `.claude/rules/pulse-workflow.md`
+For detailed workflow steps, invoke `/pulse-workflow` skill
 ```
 
-**`.claude/rules/pulse-workflow.md`**:
+**`.claude/skills/pulse-workflow/SKILL.md`**:
 ```markdown
 # Detailed Pulse Workflow
 
@@ -214,12 +226,34 @@ Consider using the Task tool with:
 **Monthly review**:
 - Check CLAUDE.md line count
 - Look for sections referenced but rarely used
-- Extract to skills or rules as needed
+- Extract to skills as needed
 - Verify Goals/Responsibilities stay high-level
+
+## Auto-Memory Best Practices
+
+The auto-memory (`~/.claude/projects/.../memory/MEMORY.md`) is special:
+- Always loaded into system prompt (first 200 lines)
+- Should contain distilled learnings, not raw logs
+- Link to Diary entries for details
+- Organized semantically by topic, not chronologically
+
+**Good auto-memory entries:**
+```markdown
+## User Preferences (Learned)
+1. **Prefers frameworks over ad-hoc decisions** - Structure proposals as "Option A, B, C"
+2. **Late-night flow states produce results** - Don't nag about bedtime during momentum
+```
+
+**Bad auto-memory entries:**
+```markdown
+## 2026-02-04
+- User said they prefer frameworks
+- Also mentioned late night coding is ok
+```
 
 ---
 
-**Remember**: Every line in CLAUDE.md has a cost. Every line in a skill has value only when needed. Structure accordingly.
+**Remember**: Every line in CLAUDE.md has a cost. Every line in a skill has value only when needed. Auto-memory is for patterns, not logs. Structure accordingly.
 
-**Version**: 1.0
-**Last Updated**: 2026-01-23
+**Version**: 1.1
+**Last Updated**: 2026-02-05

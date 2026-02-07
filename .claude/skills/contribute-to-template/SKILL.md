@@ -15,8 +15,8 @@ Push generic improvements from your private desk back to the public `template` r
 The template is a **PUBLIC REPOSITORY**. Pushing private data is a **serious security and privacy breach**.
 
 **BEFORE EVERY PUSH, VERIFY:**
-1. **No personal names** - Replace your name with `[USER_NAME]`
-2. **No file paths** - Replace `/home/yourname/` with `[YOUR_PATH]`
+1. **No personal names** - Replace "Reuben" with `[USER_NAME]`
+2. **No file paths** - Replace `/home/reuben/` with `[YOUR_PATH]`
 3. **No credentials** - API keys, tokens, passwords
 4. **No personal data** - Goals, preferences, diary entries, schedules
 5. **No contact info** - Phone numbers, emails, addresses
@@ -63,7 +63,7 @@ Git worktrees allow you to work on the template in a separate directory without 
 ```bash
 # Ensure template remote is configured
 git remote -v | grep template
-# If not present: git remote add template git@github.com:YOUR_USERNAME/reeve-desk.git
+# If not present: git remote add template git@github.com:[YOUR_GITHUB_USERNAME]/reeve-desk.git
 
 # Fetch latest template
 git fetch template
@@ -146,25 +146,53 @@ cd ~/workspace/reeve-desk-template-contrib
 git status
 git diff
 
+# Create a branch for your changes
+git checkout -b template-updates-YYYY-MM-DD
+
 # Stage and commit
 git add .
 git commit -m "Add [feature]: description of what it does"
 
-# Push to template (worktree tracks template/master, so push to origin)
-git push origin HEAD:master
+# Push to template remote
+git push template template-updates-YYYY-MM-DD:master
 ```
 
-### 6. Verify and Clean Up
+### 6. Sync Main Desk with Template (CRITICAL)
+
+After pushing to template, **always** merge your main desk with `template/master`. This incorporates the template's current state as your base.
 
 ```bash
-# Verify template has the changes
-git log --oneline -5
-
-# Return to your main desk
 cd ~/reeve_desk
 
-# Optionally remove the worktree when done
-# git worktree remove ~/workspace/reeve-desk-template-contrib
+# Fetch the updated template
+git fetch template
+
+# Merge with "ours" strategy to keep local personalization on conflicts
+git merge template/master -X ours -m "Merge template updates (keeping local personalization)"
+
+# Push to your private origin
+git push origin master
+```
+
+**Why this matters:**
+- Incorporates any new template features/structure into your desk
+- Future `git log template/master..HEAD` shows what needs review
+- Creates a clean merge point for tracking contributions
+
+**Note:** Personal commits (Diary entries, Preferences, user-specific CLAUDE.md changes) will always show as "ahead" - that's intentional since they're not meant for the template. The merge ensures you have the latest template structure while keeping your personalization.
+
+### 7. Verify and Clean Up
+
+```bash
+# Verify your desk is now based on template
+git log template/master..HEAD --oneline
+# Should only show commits NOT yet contributed
+
+# Optionally reset worktree for next contribution
+cd ~/workspace/reeve-desk-template-contrib
+git fetch template
+git checkout template/master
+git reset --hard template/master
 ```
 
 ## Safety Checks (MANDATORY BEFORE EVERY PUSH)
@@ -175,10 +203,10 @@ cd ~/reeve_desk
 cd ~/workspace/reeve-desk-template-contrib
 
 # 1. Check for personal names (replace YOUR_NAME with actual name)
-grep -ri "YOUR_NAME" . --include="*.md" | grep -v ".git"
+grep -ri "reuben" . --include="*.md" | grep -v ".git"
 
 # 2. Check for personal paths
-grep -ri "/home/" . --include="*.md" | grep -v ".git" | grep -v "\[YOUR"
+grep -ri "/home/reuben" . --include="*.md" | grep -v ".git"
 
 # 3. Check for potential API keys/secrets
 grep -riE "(api_key|token|password|secret)" . --include="*.md" | grep -v ".git"
@@ -217,8 +245,9 @@ git worktree prune
 
 # Reset worktree to latest template (for fresh start)
 cd ~/workspace/reeve-desk-template-contrib
-git fetch origin
-git reset --hard origin/master
+git fetch template
+git checkout template/master
+git reset --hard template/master
 ```
 
 ## Why Worktrees?
@@ -258,13 +287,19 @@ Found 12 commits ahead of template. Analyzing...
 I'll copy the relevant files to the worktree and genericize them.
 
 [Makes changes in ~/workspace/reeve-desk-template-contrib]
+[Commits and pushes to template]
 
-Ready to commit:
-- `.claude/skills/context-engineering/SKILL.md`
-- `.claude/rules/self-awareness.md`
-- `CLAUDE.md` (with [USER_NAME] placeholders)
+Now syncing main desk with template...
+[Runs: git fetch template && git rebase template/master]
 
-Push these to template?
+Done! Merged template updates into your desk.
+`git log template/master..HEAD` now shows remaining unreviewed/personal commits:
+- `xyz999` - Merge template updates
+- `jkl012` - Customize for wellness coaching (personal - keep)
+- `mno345` - Add morning workout preference (personal - keep)
+- Various Diary entries (personal - keep)
+
+The contributed commits are now part of template/master, so future reviews start fresh.
 ```
 
 ## Remotes Reference
@@ -275,15 +310,15 @@ Push these to template?
 | `template` | Public (reeve-desk) | Shared template |
 
 **In your main desk:** `origin` = private, `template` = public
-**In the worktree:** `origin` = public template (because it was created from `template/master`)
+**In the worktree:** remotes are shared, push to `template` remote
 
-Always push personal changes to your main desk's `origin`, generic improvements through the worktree.
+Always push personal changes to `origin`, generic improvements to `template`.
 
 ## Maintaining the Worktree
 
 If you contribute frequently:
 - Keep the worktree around (`~/workspace/reeve-desk-template-contrib`)
-- Periodically fetch and reset: `cd ~/workspace/reeve-desk-template-contrib && git fetch origin && git reset --hard origin/master`
+- Periodically fetch and reset: `cd ~/workspace/reeve-desk-template-contrib && git fetch template && git checkout template/master && git reset --hard template/master`
 - This ensures you're always starting from the latest template state
 
 ---
