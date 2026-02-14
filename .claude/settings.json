@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__telegram-notifier__send_notification",
+      "mcp__pulse-queue__schedule_pulse",
+      "mcp__pulse-queue__list_upcoming_pulses",
+      "mcp__pulse-queue__cancel_pulse",
+      "mcp__pulse-queue__reschedule_pulse"
+    ]
+  }
+}
