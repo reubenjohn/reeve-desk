@@ -81,6 +81,7 @@ reeve_desk/
 ├── Responsibilities/   ← The Operational Manual (recurring duties)
 ├── Preferences/        ← The User Manual (communication style, constraints)
 └── Diary/              ← Your memory (logs, notes, patterns)
+    └── Patterns/       ← Recurring issues & learned behaviors (check README.md)
 ```
 
 **Critical Principle**: Everything you know about the user lives in these files. There are no hidden agendas. The user can edit any file at any time to change your behavior.
@@ -116,7 +117,9 @@ When a pulse fires, you're given a **prompt** (the reason you woke up) and full 
 - Example: "Remind user about standup at 9 AM" → Add to `Diary/2026-01-21.md`
 
 **Why this matters:**
-If you schedule an aperiodic pulse at 8:00 AM, it will fire at the same time as the automatic periodic pulse, causing redundant wake-ups. Use the Diary instead.
+If you schedule an aperiodic pulse at 8:00 AM, it will fire at the same time as the automatic periodic pulse, causing redundant wake-ups.
+
+**Rule:** Hour-aligned (X:00) → Diary. Non-hour → `schedule_pulse()`.
 
 ## Your Core Directives
 
@@ -206,6 +209,7 @@ When you wake up, follow this pattern:
 - Read Responsibilities/Responsibilities.md for recurring duties
 - Read Preferences/Preferences.md for constraints
 - Scan Diary/ for recent context (if needed)
+- Check Diary/Patterns/README.md if investigating issues or debugging
 ```
 
 ### 3. **Take Action**
@@ -230,6 +234,18 @@ Based on the above:
   - Did I learn something new about the user? → Add to appropriate file
   - Did I get feedback or correction? → Update CLAUDE.md or Preferences
   - Is there context I'll need later? → Add to Diary with clear tags
+
+□ TASK EXTRACTION
+  - Did I identify a discrete action item with a completion state?
+    → One-time with deadline/done state: Add to Tasks/Open.md
+    → Recurring duty: Add to Responsibilities/
+    → Rule: If it repeats on schedule = Responsibility. If discrete completion = Task.
+  - Does this item need BOTH a task AND a responsibility?
+    → Example: "Call dentist" (task) + "Dental checkup every 6 months" (responsibility)
+
+□ INFRASTRUCTURE HEALTH
+  - Run `/mcp-diagnostics` quick check
+  - Only notify user if something is degraded or down
 
 □ DESK HYGIENE
   - Is Diary/ getting cluttered? → Summarize/archive old entries
@@ -276,18 +292,37 @@ Examples of using Diary for hour-aligned tasks:
 □ 1. DID I EDIT FILES?
      → If yes: Commit to git immediately (don't wait)
      → Files to always commit: Goals/, Preferences/, Responsibilities/, CLAUDE.md, Diary/
+     → THEN: Push immediately with `git push`
+     → Get commit hash: `git rev-parse HEAD`
 
 □ 2. DID I PROMISE TO DO SOMETHING?
      → If yes: Either do it now, or schedule a pulse/diary entry
 
 □ 3. DOES THE USER NEED TO KNOW SOMETHING?
      → If yes: Send notification (check Preferences for priority level)
+     → **ALWAYS include commit links when Desk was modified**
+     → Link format: [YOUR_GITHUB_REPO_URL]/commit/{hash}
+     → Default: Overcommunicate. Silent only during reduced-communication windows.
 
 □ 4. SHOULD I LOG THIS?
      → If significant: Add entry to Diary/ with context and tags
 
 □ 5. IS THERE FOLLOW-UP NEEDED?
      → If yes: Schedule aperiodic pulse (non-hour) or add to Diary (hour-aligned)
+
+□ 6. LOG SESSION METRICS (for significant pulses)
+     → Use session-analyzer skill to capture: messages, tool calls, tokens
+     → Log to Diary: "Session metrics: X messages, Y tool calls, ~Z tokens"
+     → This enables budget utilization retrospection
+     → See: .claude/skills/session-analyzer/SKILL.md
+
+□ 7. DID I IDENTIFY ACTIONABLE ITEMS?
+     → For each item ask: "Is this one-time with a done state?"
+     → If YES: Add to Tasks/Open.md with priority, deadline, tags
+       Format: `- [ ] Task description (Due: YYYY-MM-DD) #tag`
+     → If NO (recurring): Add to Responsibilities/
+     → If BOTH: Create task AND verify responsibility exists
+     → Cross-reference: Add source link (Diary entry, email)
 ```
 
 **This checklist exists because forgetting to commit is a common failure mode. Don't skip it.**
@@ -404,6 +439,8 @@ These skills execute workflows (not just information):
 - `/schedule-followup-pulse` - Schedule reminders
 - `/session-analyzer` - Analyze session metrics
 - `/daily-retrospection` - Overnight consolidation
+- `/mcp-diagnostics` - MCP health checks (auto-runs on hourly pulses)
+- `/validate-behavior-change` - Scientific validation for Desk changes
 
 ## Remember: You Are the User's Advocate
 
