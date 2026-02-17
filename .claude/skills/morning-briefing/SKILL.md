@@ -13,6 +13,10 @@ Provide a comprehensive morning briefing to start the user's day with clarity an
 ### 1. Read Context
 - Read `Goals/Goals.md` for current priorities and active goals
 - Read `Responsibilities/Responsibilities.md` for today's recurring duties
+- Read `Tasks/Open.md` for pending tasks, noting:
+  - **Overdue tasks** (due date < today) → Flag prominently
+  - **Due today** → Include in priorities
+  - **Due within 3 days** → Mention as upcoming
 - Check `Diary/` for any pending items from yesterday or instructions left for today
 - Read `Preferences/Preferences.md` for communication preferences
 
@@ -44,6 +48,13 @@ Structure your briefing with these sections:
 - Anything due today or overdue
 - Follow-ups waiting for action
 - Time-sensitive matters
+
+**Open Tasks** (from Tasks/Open.md)
+- List overdue tasks with warning: "⚠️ OVERDUE (X days): [task]"
+- List tasks due today: "🔴 DUE TODAY: [task]"
+- List tasks due tomorrow: "📌 Due tomorrow: [task]"
+- Mention tasks due within 3 days: "Upcoming: [task] due [date]"
+- Flag stale tasks (30+ days): "⏳ Stale: [task] - reschedule or drop?"
 
 **Focus Suggestion**
 - Suggest 1-2 focus areas for the day

@@ -143,6 +143,60 @@ Reason: Sleep data appearing consistently, useful for pattern analysis
 - Diary/2026-02-05.md
 ```
 
+### Phase 3.5: Task Extraction
+
+**Scan Today's Diary for Actionable Items:**
+
+Look for patterns that indicate discrete tasks:
+- "[USER_NAME] to call/schedule/check/forward/resolve..."
+- Tables labeled "Action Items" or similar
+- Items marked with "[ ]" or "TODO"
+- Phrases: "needs to", "should", "must", "by [date]"
+
+**For each potential task, apply the Task Test:**
+
+1. **Discrete completion?** Can this be marked "done"?
+   - YES → Potential task
+   - NO → Skip (it's context, not a task)
+
+2. **One-time or recurring?**
+   - One-time → Task (add to Tasks/Open.md)
+   - Recurring → Responsibility (skip if already captured)
+   - BOTH → Create task AND verify responsibility exists
+
+3. **Has a deadline or urgency?**
+   - Explicit deadline → Include due date
+   - Implicit urgency → Estimate reasonable due date
+   - No urgency → Add to Low Priority / Someday
+
+**Extract to Tasks/Open.md:**
+
+```markdown
+## High Priority
+- [ ] Task description (Due: YYYY-MM-DD) #tag
+      Source: Diary/YYYY-MM-DD.md (Section name)
+```
+
+**Check for Completed Tasks:**
+
+1. Scan today's Diary for completion signals:
+   - "Called dentist ✓", "Completed: X", "[x] Task", "Done: X"
+2. Find matching task in Tasks/Open.md
+3. Move to Tasks/Completed.md:
+   ```markdown
+   - [x] Task description (Completed: YYYY-MM-DD) #tag
+         Originally due: YYYY-MM-DD
+   ```
+
+**Log extraction:**
+```markdown
+## Task Extraction
+Extracted X tasks from today's diary:
+- "Task description" (Due: date) → High Priority
+Completed Y tasks:
+- "Task description" (completed today)
+```
+
 ### Phase 4: Session Analysis Integration
 
 Use the `/session-analyzer` skill approach to get today's metrics.
