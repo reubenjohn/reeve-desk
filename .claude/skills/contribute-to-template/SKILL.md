@@ -58,7 +58,24 @@ Git worktrees allow you to work on the template in a separate directory without 
 - You want to test template changes in isolation
 - You need to carefully review what you're contributing
 
-### 1. Set Up the Worktree (First Time)
+### 1. Snapshot the Current Desk (Pulse Isolation)
+
+**CRITICAL: Do this FIRST, before any copying.**
+
+Pulses fire hourly and can modify your desk mid-contribution. Snapshot the current state so you're copying from a frozen point-in-time:
+
+```bash
+# Create a clean snapshot of the current desk state
+rm -rf /tmp/reeve-desk-snapshot
+mkdir -p /tmp/reeve-desk-snapshot
+git -C ~/reeve_desk archive HEAD | tar -x -C /tmp/reeve-desk-snapshot/
+```
+
+**From this point, ALWAYS copy from `/tmp/reeve-desk-snapshot/` instead of `~/reeve_desk/`.**
+
+This prevents race conditions where a pulse commits changes between your file copies.
+
+### 2. Set Up the Worktree (First Time)
 
 ```bash
 # Ensure template remote is configured
@@ -74,7 +91,7 @@ git worktree add ~/workspace/reeve-desk-template-contrib template/master
 
 This creates a separate checkout at `~/workspace/reeve-desk-template-contrib` that tracks the template remote.
 
-### 2. Review What's Different
+### 3. Review What's Different
 
 ```bash
 # See commits in your desk that aren't in template
@@ -98,15 +115,15 @@ For each commit, ask:
 - `Add preference: morning workouts`
 - `Update Goals for Q1`
 
-### 3. Make Changes in the Worktree
+### 4. Make Changes in the Worktree
 
 Navigate to the worktree and make your changes there:
 
 ```bash
 cd ~/workspace/reeve-desk-template-contrib
 
-# Option A: Copy files from your desk (then genericize)
-cp ~/reeve_desk/.claude/skills/new-skill/SKILL.md .claude/skills/new-skill/
+# Option A: Copy files from the SNAPSHOT (then genericize)
+cp /tmp/reeve-desk-snapshot/.claude/skills/new-skill/SKILL.md .claude/skills/new-skill/
 
 # Option B: Cherry-pick specific commits
 git cherry-pick <commit-hash>
@@ -115,7 +132,7 @@ git cherry-pick <commit-hash>
 # Edit directly in this directory
 ```
 
-### 4. Genericize the Changes
+### 5. Genericize the Changes
 
 Before committing, ensure changes are generic:
 
@@ -137,7 +154,7 @@ Before committing, ensure changes are generic:
    - References to personal habits or routines
    - Timezone-specific information
 
-### 5. Commit and Push from Worktree
+### 6. Commit and Push from Worktree
 
 ```bash
 cd ~/workspace/reeve-desk-template-contrib
@@ -157,7 +174,7 @@ git commit -m "Add [feature]: description of what it does"
 git push template template-updates-YYYY-MM-DD:master
 ```
 
-### 6. Sync Main Desk with Template (CRITICAL)
+### 7. Sync Main Desk with Template (CRITICAL)
 
 After pushing to template, **always** merge your main desk with `template/master`. This incorporates the template's current state as your base.
 
@@ -181,9 +198,12 @@ git push origin master
 
 **Note:** Personal commits (Diary entries, Preferences, user-specific CLAUDE.md changes) will always show as "ahead" - that's intentional since they're not meant for the template. The merge ensures you have the latest template structure while keeping your personalization.
 
-### 7. Verify and Clean Up
+### 8. Clean Up
 
 ```bash
+# Clean up the snapshot
+rm -rf /tmp/reeve-desk-snapshot
+
 # Verify your desk is now based on template
 git log template/master..HEAD --oneline
 # Should only show commits NOT yet contributed
@@ -265,8 +285,11 @@ git reset --hard template/master
 ```
 User: /contribute-to-template
 
-Reeve: Let me set up a worktree for safe contribution.
+Reeve: First, let me snapshot the desk so pulses don't interfere.
 
+[Runs: git archive HEAD | tar -x -C /tmp/reeve-desk-snapshot/]
+
+Now setting up the worktree for safe contribution.
 [Runs: git worktree list]
 [If no template worktree exists: git worktree add ~/workspace/reeve-desk-template-contrib template/master]
 

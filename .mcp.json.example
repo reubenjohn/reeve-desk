@@ -1,5 +1,14 @@
 {
   "mcpServers": {
+    "whatsapp": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/path/to/whatsapp-mcp/whatsapp-mcp-server",
+        "run",
+        "main.py"
+      ]
+    },
     "google-workspace": {
       "command": "uvx",
       "args": ["workspace-mcp"],
