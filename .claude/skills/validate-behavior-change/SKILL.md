@@ -140,7 +140,7 @@ Task(
     Expected: {evidence}
 
     Check file changes:
-    - Tasks/Open.md, Diary/, Responsibilities/
+    - Tasks/Open.md, Knowledge/Diary/, Responsibilities/
 
     Use session-analyzer to check:
     - Session JSONL for tool_use calls (Write, Edit)
@@ -152,7 +152,7 @@ Task(
 
 **5d. Fail-fast on failure:**
 1. Cancel remaining: `cancel_pulse(pulse_id=X)`
-2. Diagnose from Diary/session logs
+2. Diagnose from Knowledge/Diary/session logs
 3. Fix the Desk change
 4. Commit fix, restart from beginning
 

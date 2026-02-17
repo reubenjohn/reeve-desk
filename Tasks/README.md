@@ -70,3 +70,10 @@ Use tags for filtering and pattern analysis:
 - `#work` - Professional tasks
 - `#home` - Household tasks
 - `#idea` - Someday/maybe items
+
+## Related
+
+- [Responsibilities/](../Responsibilities/) — Recurring duties (vs one-time tasks)
+- [Knowledge/Relationships/](../Knowledge/Relationships/README.md) — Context for `#social` tasks
+- [Knowledge/Infrastructure/](../Knowledge/Infrastructure/README.md) — Context for `#infra` tasks
+- See CLAUDE.md § Task Completion Checklist for the full commit/notify/log protocol

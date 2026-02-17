@@ -39,7 +39,8 @@ Invoke `/contribute-to-template` when you have:
 **These directories are ALWAYS private - NEVER push them:**
 - `Preferences/` - Personal preferences, communication style
 - `Goals/` - Personal goals and aspirations
-- `Diary/` - Logs, notes, personal history
+- `Knowledge/Diary/` - Logs, notes, personal history
+- `Knowledge/Relationships/` - Personal contacts and relationships
 - `Responsibilities/` - Personal tasks and projects
 
 **These patterns are ALWAYS private - search and replace before pushing:**
@@ -229,12 +230,15 @@ grep -ri "reuben" . --include="*.md" | grep -v ".git"
 grep -ri "/home/reuben" . --include="*.md" | grep -v ".git"
 
 # 3. Check for potential API keys/secrets
-grep -riE "(api_key|token|password|secret)" . --include="*.md" | grep -v ".git"
+grep -riE "(api_key|token|password|secret|client_id|client_secret|GOCSPX)" . --include="*.md" | grep -v ".git"
 
-# 4. Review all staged changes line by line
+# 4. Check for family/contact names
+grep -ri "[FAMILY_NAMES_HERE]" . --include="*.md" | grep -v ".git"
+
+# 5. Review all staged changes line by line
 git diff --staged
 
-# 5. Verify no private directories are included
+# 6. Verify no private directories are included
 git status | grep -E "(Preferences|Goals|Diary|Responsibilities)/"
 ```
 
@@ -242,9 +246,11 @@ git status | grep -E "(Preferences|Goals|Diary|Responsibilities)/"
 
 **Checklist:**
 - [ ] No personal names (replaced with `[USER_NAME]`)
+- [ ] No family/contact names
 - [ ] No personal paths (replaced with `[YOUR_DESK_PATH]`)
-- [ ] No API keys, tokens, or credentials
-- [ ] No Diary/, Goals/, Preferences/, Responsibilities/ files
+- [ ] No API keys, tokens, or credentials (including OAuth client IDs/secrets)
+- [ ] No email addresses
+- [ ] No Knowledge/Diary/, Goals/, Preferences/, Responsibilities/ content (structural README changes OK)
 - [ ] All changes reviewed with `git diff --staged`
 - [ ] Commit message doesn't contain personal info
 
@@ -344,7 +350,25 @@ If you contribute frequently:
 - Periodically fetch and reset: `cd ~/workspace/reeve-desk-template-contrib && git fetch template && git checkout template/master && git reset --hard template/master`
 - This ensures you're always starting from the latest template state
 
+## Lessons Learned
+
+**From production contribution sessions:**
+
+1. **Commit local desk changes before merging template back.** The merge will fail if you have uncommitted changes to files that also changed in the template.
+
+2. **Check structural improvements in Goals/, Preferences/, Responsibilities/ too** — not just skills and CLAUDE.md. Structural sections (like coaching style, proactive authorization) are generic even though personal content isn't.
+
+3. **Skip files with embedded credentials entirely** (e.g., `google-workspace.md` with OAuth client secrets). Even with placeholders, the risk of partial sanitization is too high.
+
+4. **Commit frequently** — one commit per logical group, not one giant commit. This makes review easier and allows partial reverts if needed.
+
+5. **Add family/contact names to safety grep.** Personal names extend beyond just the user — check for spouse, family, colleagues too.
+
+6. **`-X ours` merge strategy works well** for syncing desk with template. Conflicts resolve in favor of local personalization, which is almost always what you want.
+
+7. **`git archive` snapshot is sufficient for pulse isolation.** You don't need git commands in the snapshot — you're just reading files to copy from. A worktree would also work but is overkill for this purpose.
+
 ---
 
-**Version**: 2.0 (Worktree Edition)
-**Last Updated**: 2026-02-04
+**Version**: 3.0 (Snapshot + Learnings Edition)
+**Last Updated**: 2026-02-17

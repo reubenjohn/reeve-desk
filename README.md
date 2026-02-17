@@ -12,21 +12,22 @@ The Desk is a collaborative workspace between you and Reeve. Everything Reeve kn
 reeve_desk/
 ├── README.md              ← You are here
 ├── CLAUDE.md              ← Reeve's identity & operating instructions
-├── .claude/
-│   └── skills/            ← Reeve's workflow skills (invocable with /skill-name)
+├── .claude/skills/        ← Reeve's workflow skills (invocable with /skill-name)
 │
 ├── Goals/                 ← Your North Star (long-term objectives)
-│   └── Goals.md
-│
 ├── Responsibilities/      ← Your Operational Manual (recurring duties)
-│   └── Responsibilities.md
-│
 ├── Preferences/           ← Your User Manual (how you want Reeve to behave)
-│   └── Preferences.md
+├── Tasks/                 ← Discrete action items with deadlines
 │
-└── Diary/                 ← Reeve's memory (activity logs, patterns)
-    ├── README.md
-    └── 2026-01-22.md
+└── Knowledge/             ← Everything Reeve "knows"
+    ├── Diary/             ← Activity logs, patterns, investigations
+    │   ├── YYYY-MM/       ← Monthly folders for daily logs
+    │   ├── Investigations/ ← Deep-dive research sessions
+    │   ├── Patterns/      ← Recurring behavioral patterns
+    │   └── Archive/       ← Old monthly roll-ups
+    ├── Infrastructure/    ← MCP servers, health checks, runbooks
+    │   └── Runbooks/      ← Per-service troubleshooting guides
+    └── Relationships/     ← People, contacts, interaction tracking
 ```
 
 ## Quick Start
@@ -35,12 +36,12 @@ reeve_desk/
 
 Read these files to understand Reeve's operating model:
 
-1. **[CLAUDE.md](CLAUDE.md)** - Reeve's core identity and decision-making framework
+1. **[CLAUDE.md](CLAUDE.md)** - Reeve's core identity, decision-making framework, and pulse workflow
 2. **`.claude/skills/`** - Reeve's workflow skills (auto-invoked or manual with `/skill-name`)
    - `/morning-briefing` - Daily morning briefing at 8 AM
    - `/evening-wrapup` - Daily evening wrap-up at 6 PM
-   - `/emergency` - Handle critical/urgent events
-   - `/schedule-followup` - Schedule follow-up pulses
+   - `/emergency-response` - Handle critical/urgent events
+   - `/schedule-followup-pulse` - Schedule follow-up pulses
    - `/goal-check` - Weekly goal review (manual-only)
    - `/diary-log` - Log activities to Diary
 
@@ -90,17 +91,19 @@ Why did Reeve decline that 8 AM meeting?
   - **Periodic pulses** (automatic, every hour on the hour)
   - **Aperiodic pulses** (Reeve schedules these for non-hour times using `schedule_pulse()`)
   - **Event-triggered pulses** (external events like Telegram messages)
-- When a pulse fires, Reeve wakes up, reads the Desk, and takes action
+- When a pulse fires, Reeve reads the Desk and takes action
 - You're only interrupted when something truly requires your attention
+
+For the full pulse workflow, see [CLAUDE.md](CLAUDE.md) § Workflow for Each Pulse.
 
 ### 3. Edit Anything, Anytime
 
 **This is YOUR workspace.** Feel free to:
-- ✏️ Edit any file to change Reeve's behavior
-- 📁 Reorganize directories
-- 🗑️ Delete sections that don't apply to you
-- ➕ Add new files for specialized preferences
-- 🔄 Evolve the structure over time
+- Edit any file to change Reeve's behavior
+- Reorganize directories
+- Delete sections that don't apply
+- Add new files for specialized preferences
+- Evolve the structure over time
 
 **Reeve will adapt to whatever you create.**
 
@@ -112,89 +115,15 @@ Why did Reeve decline that 8 AM meeting?
 2. **Preferences/Preferences.md** - Set notification times and DND hours
 3. **Responsibilities/Responsibilities.md** - Add morning/evening routines
 
-This gives Reeve enough context to be useful.
-
 ### For Full Setup (30-60 minutes):
 
 - Complete all sections in Goals, Responsibilities, and Preferences
-- Add detailed communication rules
-- Set up calendar preferences
+- Add detailed communication rules and calendar preferences
 - Define priority frameworks
-- Optionally create domain-specific preference files
 
 ## How Reeve Uses the Desk
 
-### Every Time Reeve Wakes Up (on a pulse):
-
-1. **Reads the context:**
-   - Why did I wake up? (the pulse prompt)
-   - What time is it?
-   - What does the user's calendar look like?
-
-2. **Checks the Desk:**
-   - `Goals/Goals.md` → What are the user's priorities?
-   - `Responsibilities/Responsibilities.md` → Any recurring duties due?
-   - `Preferences/Preferences.md` → How should I communicate?
-   - `Diary/` → Any recent context I should know?
-
-3. **Takes action:**
-   - Send a notification (if the user needs to know)
-   - Schedule future aperiodic pulses (for non-hour times) or add instructions to Diary/ (for hour-aligned times)
-   - Update Diary/ (log what I did)
-
-### Example Flow: Morning Briefing
-
-```
-1. Periodic pulse fires automatically at 8:00 AM
-2. Reeve checks Diary/2026-01-20.md and sees: "Morning briefing"
-
-3. Reeve reads:
-   - Goals/Goals.md → User's top priority is "Complete Reeve MVP"
-   - Responsibilities/Responsibilities.md → Checking calendar is part of morning routine
-   - Preferences/Preferences.md → User wants concise briefings
-
-4. Reeve composes notification:
-   "Good morning! 3 meetings today:
-   - 10 AM: Team standup
-   - 2 PM: 1:1 with Sarah (re: Q1 budget)
-   - 4 PM: Code review
-
-   Top priority: Finish Phase 5 (Daemon) for Reeve MVP.
-   Deep work block protected: 9 AM - 12 PM."
-
-5. Reeve sends notification via Telegram
-
-6. Reeve logs to Diary/2026-01-20.md:
-   "Morning briefing delivered at 8:00 AM.
-   User has moderate meeting load (3 meetings).
-   Deep work block successfully protected."
-
-7. Reeve adds to Diary/2026-01-20.md for later:
-   "Evening wrap-up" (the automatic 6:00 PM periodic pulse will handle it)
-```
-
-## File Editing Tips
-
-All Desk files use standard Markdown formatting. For syntax reference, see the [Markdown Guide](https://www.markdownguide.org/basic-syntax/).
-
-Edit files with any text editor - Reeve reads them directly from the filesystem. No special tools required.
-
-### Version Control (Optional)
-
-You can track changes with git:
-
-```bash
-cd ~/reeve_desk
-git init
-git add .
-git commit -m "Initial desk setup"
-
-# After making changes:
-git add .
-git commit -m "Updated preferences: added DND hours"
-```
-
-This gives you a history of how your preferences evolved.
+Each time Reeve wakes up on a pulse, it reads your Goals, Responsibilities, Preferences, and recent Diary entries to understand your context — then takes action (notifications, scheduling, logging). For the detailed workflow, see [CLAUDE.md](CLAUDE.md) § Workflow for Each Pulse.
 
 ## Troubleshooting
 
@@ -202,36 +131,26 @@ This gives you a history of how your preferences evolved.
 
 1. **Check CLAUDE.md** - Does it define the behavior you want?
 2. **Check Preferences/Preferences.md** - Is there a rule causing this?
-3. **Read Diary/** - Look for Reeve's recent logs to understand reasoning
-4. **Edit the relevant file** to change the behavior
-5. **Test again** - Schedule a pulse and observe
+3. **Read Knowledge/Diary/** - Look at recent logs to understand reasoning
+4. **Check Knowledge/Infrastructure/** - Is an MCP server down?
+5. **Edit the relevant file** to change the behavior
 
-### Reeve Can't Read Files
+### Infrastructure Issues
 
-1. **Check permissions:**
-   ```bash
-   ls -la ~/reeve_desk
-   # Should be readable by the user running reeve-bot
-   ```
+See [Knowledge/Infrastructure/README.md](Knowledge/Infrastructure/README.md) for MCP health checks and per-service runbooks.
 
-2. **Check reeve-bot config:**
-   ```bash
-   # In reeve-bot/.env or config
-   REEVE_DESK_PATH=~/reeve_desk
-   ```
+## File Editing Tips
 
-3. **Check file paths:**
-   - All files should be in `~/reeve_desk/` or subdirectories
-   - Use standard Markdown `.md` extension
+All Desk files use standard Markdown. Edit with any text editor — Reeve reads them directly from the filesystem.
 
-### Want to Start Over
+### Version Control
+
+Changes are tracked with git automatically by Reeve. You can also commit manually:
 
 ```bash
-# Backup current desk
-mv ~/reeve_desk ~/reeve_desk.backup
-
-# Recreate from templates
-# (Re-run desk creation or copy from backup)
+cd ~/reeve_desk
+git add .
+git commit -m "Updated preferences: added DND hours"
 ```
 
 ## Privacy & Security
@@ -239,66 +158,31 @@ mv ~/reeve_desk ~/reeve_desk.backup
 ### What's Stored Here
 
 - Your goals and priorities (plaintext)
-- Your calendar preferences (plaintext)
-- Your communication preferences (plaintext)
+- Your preferences (plaintext)
 - Reeve's activity logs (plaintext)
 
 **NOT stored here:**
 - Passwords or API keys (those go in `.env` files in reeve-bot/)
-- Full message transcripts (those go in C.O.R.E. memory system)
 - Sensitive data (you control what goes in these files)
 
 ### Who Can Access This
 
 - **You** - Full read/write access
-- **Reeve** - Read access (and write for Diary/)
-- **Anyone with access to your filesystem** - These are plaintext files
-
-**If you're concerned about privacy:**
-- Encrypt your home directory
-- Use file permissions to restrict access
-- Don't include sensitive information in these files
-- Use the C.O.R.E. memory system for sensitive data storage
-
-## Evolution Over Time
-
-The Desk will grow and change:
-
-**Week 1:** Basic templates filled in
-**Month 1:** Diary/ has daily logs, patterns emerge
-**Month 3:** Custom preference files, project-specific structures
-**Month 6:** Well-organized archive, refined decision frameworks
-
-**This is normal and expected.** Let the structure evolve naturally based on your usage.
-
-## Support & Feedback
-
-**Issues with Reeve Bot (the software):**
-- See: https://github.com/anthropics/claude-code/issues (if public repo)
-- Or: Contact the maintainer
-
-**Want to share your Desk customizations:**
-- Consider sharing anonymized versions
-- Help others learn effective Desk structures
-
-**Questions about how to structure the Desk:**
-- Experiment! There's no "wrong" structure
-- Start simple, expand as needed
-- Ask Reeve: "How should I organize [X]?"
+- **Reeve** - Read/write access (for Knowledge/Diary/, Tasks/)
+- **Anyone with filesystem access** - These are plaintext files
 
 ## Further Reading
 
 - **[CLAUDE.md](CLAUDE.md)** - Deep dive into Reeve's operating principles
-- **`.claude/skills/`** - Individual skill files for detailed workflow instructions
-- **[Diary/README.md](Diary/README.md)** - How Reeve's memory system works
+- **[Knowledge/README.md](Knowledge/README.md)** - Index of all knowledge (Diary, Infrastructure, Relationships)
+- **[Knowledge/Diary/README.md](Knowledge/Diary/README.md)** - How Reeve's memory system works
 - **[Preferences/Preferences.md](Preferences/Preferences.md)** - Example preferences with detailed explanations
-- **[Claude Code Skills Documentation](https://code.claude.com/docs/en/skills)** - Official guide to skills in Claude Code
 
 ---
 
 **Created:** 2026-01-20
-**Updated:** 2026-01-22
-**Version:** 1.2
+**Updated:** 2026-02-17
+**Version:** 2.0
 **Maintainer:** You (the user)
 
 Remember: This is YOUR workspace. Shape it however makes sense to you. Reeve will adapt.

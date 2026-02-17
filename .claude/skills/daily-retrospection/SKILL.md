@@ -14,7 +14,7 @@ Intelligent overnight housekeeping for the Desk. This skill analyzes what actual
 
 - Analyze what exists, then decide how to organize it
 - Patterns should emerge from data, not be pre-created
-- Preserve raw information in Archive, present condensed summaries in Diary
+- Preserve raw information in Archive, present condensed summaries in Knowledge/Diary/
 - Cross-cutting documents evolve based on what's actually tracked
 - Every run should leave the Desk more useful for future sessions
 
@@ -29,7 +29,7 @@ Intelligent overnight housekeeping for the Desk. This skill analyzes what actual
 
 ### Phase 1: Analyze Today's Diary
 
-Read `Diary/YYYY-MM-DD.md` (today's date) and identify:
+Read `Knowledge/Diary/YYYY-MM/YYYY-MM-DD.md` (today's date) and identify:
 
 **1. Entry Categories**
 Scan each entry and mentally categorize:
@@ -92,8 +92,8 @@ If today's diary is 200+ lines, create a condensed version:
 Only archive if today's diary was exceptionally verbose (400+ lines):
 ```bash
 # Move verbose original to archive
-mkdir -p Diary/Archive/2026-02
-mv Diary/2026-02-05.md Diary/Archive/2026-02/2026-02-05-verbose.md
+mkdir -p Knowledge/Diary/Archive/2026-02
+mv Knowledge/Diary/2026-02/2026-02-05.md Knowledge/Diary/Archive/2026-02/2026-02-05-verbose.md
 
 # Create condensed version at original path
 # (Write the condensed content)
@@ -108,13 +108,13 @@ mv Diary/2026-02-05.md Diary/Archive/2026-02/2026-02-05-verbose.md
 **Decision Framework:**
 
 Ask: "Is this data point appearing 3+ days in a row?"
-- Sleep data logged daily → Consider `Diary/Patterns/Sleep.md`
-- Workout data logged daily → Consider `Diary/Patterns/Fitness.md`
-- Headaches logged multiple days → Consider `Diary/Patterns/Health-Issues.md`
+- Sleep data logged daily → Consider `Knowledge/Diary/Patterns/Sleep.md`
+- Workout data logged daily → Consider `Knowledge/Diary/Patterns/Fitness.md`
+- Headaches logged multiple days → Consider `Knowledge/Diary/Patterns/Health-Issues.md`
 
 Ask: "Is this context needed across multiple sessions?"
-- MCP troubleshooting patterns → Consider `Diary/Patterns/MCP-Debugging.md`
-- User feedback patterns → Consider `Diary/Patterns/User-Preferences-Learned.md`
+- MCP troubleshooting patterns → Consider `Knowledge/Diary/Patterns/MCP-Debugging.md`
+- User feedback patterns → Consider `Knowledge/Diary/Patterns/User-Preferences-Learned.md`
 
 Ask: "Would future-me benefit from this being easy to find?"
 - Yes → Create cross-cutting document with clear links back to source entries
@@ -123,7 +123,7 @@ Ask: "Would future-me benefit from this being easy to find?"
 **Example: Creating a pattern doc**
 
 ```markdown
-# Diary/Patterns/Sleep.md
+# Knowledge/Diary/Patterns/Sleep.md
 
 Created: 2026-02-05
 Reason: Sleep data appearing consistently, useful for pattern analysis
@@ -139,8 +139,8 @@ Reason: Sleep data appearing consistently, useful for pattern analysis
 - [Add more as they emerge]
 
 ## Sources
-- Diary/2026-02-04.md
-- Diary/2026-02-05.md
+- Knowledge/Diary/2026-02/2026-02-04.md
+- Knowledge/Diary/2026-02/2026-02-05.md
 ```
 
 ### Phase 3.5: Task Extraction
@@ -174,7 +174,7 @@ Look for patterns that indicate discrete tasks:
 ```markdown
 ## High Priority
 - [ ] Task description (Due: YYYY-MM-DD) #tag
-      Source: Diary/YYYY-MM-DD.md (Section name)
+      Source: Knowledge/Diary/YYYY-MM/YYYY-MM-DD.md (Section name)
 ```
 
 **Check for Completed Tasks:**
@@ -291,7 +291,7 @@ Patterns that indicate feedback:
 **Always commit after retrospection:**
 
 ```bash
-git add Diary/
+git add Knowledge/Diary/
 git add -A  # Catch any new pattern files
 git commit -m "Daily retrospection: YYYY-MM-DD - [brief summary]"
 git push
@@ -379,7 +379,7 @@ Eye strain again. 20-20-20 rule suggested.
 Third day of eye strain. User working long hours on Reeve-bot.
 ```
 
-**Action:** Create `Diary/Patterns/Eye-Strain.md`:
+**Action:** Create `Knowledge/Diary/Patterns/Eye-Strain.md`:
 ```markdown
 # Eye Strain Pattern
 

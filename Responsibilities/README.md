@@ -24,18 +24,9 @@ How Reeve should handle Responsibilities/ tracking and reminders.
 4. Suggest archiving completed projects
 5. Commit monthly review and all changes
 
-## Immediate Commit Pattern
-**Commit immediately after:**
-- Updating Goals/ (progress, new goals, completions)
-- Updating Preferences/ (learned preferences, changes)
-- Major Responsibilities/ changes (new projects, habit changes)
+## Commit Rules
 
-**Example commit messages:**
-```
-"Update fitness goal: completed Week 3 of 3-month challenge"
-"Add new preference: prefer morning workouts over evening"
-"Complete goal: Established consistent sleep routine"
-```
+Commit immediately after updating Goals/, Preferences/, or Responsibilities/. See CLAUDE.md § Task Completion Checklist for the full protocol.
 
 ## When a Responsibility is Missed
 ```
@@ -73,5 +64,9 @@ Each responsibility should ideally connect to a goal in Goals/Goals.md.
 - Ask user: "Why are we doing this?"
 
 ## Related
+
+- [Goals/Goals.md](../Goals/Goals.md) — Each responsibility should connect to a goal
+- [Tasks/Open.md](../Tasks/Open.md) — Discrete action items (vs recurring responsibilities)
+- [Knowledge/Infrastructure/](../Knowledge/Infrastructure/README.md) — Infrastructure projects and MCP management
 - For daily responsibility reminders, see `morning-briefing` skill
 - For logging completed responsibilities, see `diary-log` skill

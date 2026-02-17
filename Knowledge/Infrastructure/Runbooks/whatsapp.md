@@ -1,6 +1,6 @@
-# WhatsApp Bridge Diagnostics
+# WhatsApp Bridge Runbook
 
-## Quick Check
+## Quick Diagnosis
 
 ```bash
 # 1. Is the container running?
@@ -8,21 +8,21 @@ docker ps --filter "name=whatsapp-bridge" --format "{{.Status}}"
 # Expected: "Up X hours/days"
 
 # 2. Is the database fresh? (stale = bridge crashed silently)
-stat -c %Y [YOUR_WHATSAPP_MCP_PATH]/whatsapp-bridge/store/messages.db
+stat -c %Y [YOUR_WHATSAPP_BRIDGE_PATH]/store/messages.db
 # Compare against current time. Stale threshold: >2 hours behind.
 ```
 
-**Decision Matrix:**
+## Decision Tree
 
 | Container | DB Fresh | Action |
 |-----------|----------|--------|
-| Running | Yes | Healthy — log silently |
+| Running | Yes | **Healthy** — log silently |
 | Running | No | Bridge hung — restart container, notify user |
 | Stopped | — | `docker start whatsapp-bridge`, notify user |
 
-**Auto-remediation:** If stopped, restart:
+**Auto-remediation:** If stopped or hung, restart:
 ```bash
-docker start whatsapp-bridge
+docker restart whatsapp-bridge
 ```
 Verify it came back up. If restart fails, notify user as **Critical**.
 
@@ -36,7 +36,7 @@ docker ps -a --filter "name=whatsapp-bridge" --format "table {{.Names}}\t{{.Stat
 docker inspect whatsapp-bridge --format '{{.HostConfig.RestartPolicy.Name}}'
 
 # Database sizes and last modified times
-ls -lh [YOUR_WHATSAPP_MCP_PATH]/whatsapp-bridge/store/*.db
+ls -lh [YOUR_WHATSAPP_BRIDGE_PATH]/store/*.db
 
 # Recent container logs (look for errors)
 docker logs --tail 50 whatsapp-bridge
@@ -45,15 +45,14 @@ docker logs --tail 50 whatsapp-bridge
 # Use list_chats() MCP tool and check if results are current
 ```
 
-## Known Issues
+## Common Failures
 
 ### Silent bridge crashes
 The bridge can stop syncing messages without the container going down. The DB freshness check catches this — if `messages.db` hasn't been modified in >2 hours during waking hours, the bridge is likely hung.
 
-### Outage history
+### Container exits without restart
+Ensure the container has a restart policy: `--restart unless-stopped`.
 
-<!--
-ONBOARDING: Log your outages here to track patterns.
-Example:
-- **2026-02-04**: 25-hour outage, unnoticed until diagnostics skill was created
--->
+## Related
+
+- [../README.md](../README.md) — Infrastructure overview and health check workflow
